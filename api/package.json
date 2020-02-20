@@ -2,10 +2,15 @@
   "name": "api",
   "version": "0.1.0",
   "description": "simple REST API for calculate fibonacci",
+  "config": {
+    "registry": "4tqrgqe5yrgfd/chillgaming_testtask"
+  },
   "scripts": {
     "start": "better-npm-run start",
     "build": "rm -rf ./dist && tsc",
-    "test": "rm -rf ./dist && jest -i --coverage --silent --forceExit"
+    "test": "rm -rf ./dist && jest -i --coverage --silent --forceExit",
+    "docker:build": "docker build --no-cache -t $npm_package_config_registry:$npm_package_version .",
+    "docker:push": "docker push $npm_package_config_registry:$npm_package_version"
   },
   "author": "Chugunov Roman <Zebs-BMK@yandex.ru>",
   "license": "GPL-2.0",
