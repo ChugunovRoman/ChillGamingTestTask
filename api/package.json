@@ -1,16 +1,53 @@
 {
   "name": "api",
-  "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
+  "version": "0.1.0",
+  "description": "simple REST API for calculate fibonacci",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "better-npm-run start",
+    "build": "rm -rf ./dist && tsc"
+  },
+  "author": "Chugunov Roman <Zebs-BMK@yandex.ru>",
+  "license": "GPL-2.0",
+  "devDependencies": {
+    "@types/hapi__boom": "=7.4.0",
+    "@types/hapi__hapi": "=18.2.5",
+    "@types/hapi__joi": "=15.0.2",
+    "@types/inert": "^5.1.1",
+    "@types/vision": "^5.3.4",
+    "tslint": "^6.0.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "@hapi/boom": "=7.4.2",
+    "@hapi/hapi": "=18.3.1",
+    "@hapi/inert": "^5.2.2",
+    "@hapi/joi": "=15.1.0",
+    "@hapi/vision": "^5.5.4",
+    "better-npm-run": "^0.1.1",
+    "good": "^8.1.1",
+    "good-console": "^7.1.0",
+    "good-squeeze": "^5.1.0",
+    "hapi-swagger": "^10.1.2"
   },
   "keywords": [
     "Node.js",
     "REST",
     "Hapi.js"
   ],
-  "author": "Chugunov Roman <Zebs-BMK@yandex.ru>",
-  "license": "GPL-2.0"
+  "betterScripts": {
+    "clear": {
+      "command": "rm -rf ./dist"
+    },
+    "start": {
+      "command": "node dist/index.js",
+      "env": {
+        "NODE_PATH": "./dist",
+        "HOST": "localhost",
+        "PORT": "3000",
+        "ROUTEPREFIX": "/api/v1",
+        "SWAGGER_HOST": "localhost:3000"
+      }
+    }
+  }
 }
