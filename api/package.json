@@ -4,7 +4,8 @@
   "description": "simple REST API for calculate fibonacci",
   "scripts": {
     "start": "better-npm-run start",
-    "build": "rm -rf ./dist && tsc"
+    "build": "rm -rf ./dist && tsc",
+    "test": "rm -rf ./dist && jest -i --coverage --silent --forceExit"
   },
   "author": "Chugunov Roman <Zebs-BMK@yandex.ru>",
   "license": "GPL-2.0",
@@ -12,11 +13,14 @@
     "@types/hapi__boom": "=7.4.0",
     "@types/hapi__hapi": "=18.2.5",
     "@types/hapi__joi": "=15.0.2",
+    "@types/jest": "^24.0.13",
     "@types/inert": "^5.1.1",
     "@types/vision": "^5.3.4",
     "tslint": "^6.0.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.0.2"
   },
   "dependencies": {
     "@hapi/boom": "=7.4.2",
@@ -35,6 +39,10 @@
     "REST",
     "Hapi.js"
   ],
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  },
   "betterScripts": {
     "clear": {
       "command": "rm -rf ./dist"
