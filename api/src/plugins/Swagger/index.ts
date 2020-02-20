@@ -19,7 +19,7 @@ const options = {
   swaggerUIPath: '/swaggerui/',
   documentationPath: '/documentation',
   payloadType: 'json',
-  expanded: 'none',
+  expanded: 'full',
   grouping: 'tags',
   swaggerUI: true,
   schemes: ['http'],

@@ -7,10 +7,6 @@ export class Server {
 
   constructor(options: Hapi.ServerOptions) {
     this.server = new Hapi.Server(options);
-
-    if (process.env.ROUTEPREFIX) {
-      this.server.realm.modifiers.route.prefix = process.env.ROUTEPREFIX;
-    }
   }
 
   private async register() {
@@ -33,9 +29,7 @@ export class Server {
       await this.register();
       await this.server.start();
       console.info(`Server is running ${this.server.info.uri}`);
-      console.info(
-        `For see REST API documentation visit it: ${this.server.info.uri}${this.server.realm.modifiers.route.prefix}/documentation`,
-      );
+      console.info(`For see REST API documentation visit it: ${this.server.info.uri}/documentation`);
     } catch (error) {
       console.error('Hapi server start ERROR: ', error.stack);
     }

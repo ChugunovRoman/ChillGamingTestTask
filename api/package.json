@@ -45,7 +45,6 @@
         "NODE_PATH": "./dist",
         "HOST": "localhost",
         "PORT": "3000",
-        "ROUTEPREFIX": "/api/v1",
         "SWAGGER_HOST": "localhost:3000"
       }
     }
