@@ -1,0 +1,42 @@
+{
+  "name": "desktop",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/main/main.js",
+  "scripts": {
+    "watch": "run-p -r parcel:watch electron:start",
+    "main:watch": "rimraf dist && parcel watch src/main/index.ts  --out-dir dist/main/ --out-file main --target electron",
+    "main:build": "rimraf dist && parcel build src/main/index.ts  --out-dir dist/main/ --out-file main --target electron",
+    "parcel:watch": "run-p -r main:watch renderer:watch",
+    "renderer:watch": "rimraf dist && parcel src/renderer/index.html --port 3001 --out-dir dist/renderer",
+    "renderer:build": "rimraf dist && parcel build src/renderer/index.html --public-url ./ --out-dir dist/renderer",
+    "electron:start": "nodemon --watch dist/main --exec \"electron .\"",
+    "electron:build": "build --x64 --publish=never",
+    "builder": "electron-builder --config=config/builder.json"
+  },
+  "keywords": [
+    "Electron",
+    "SQLite",
+    "React"
+  ],
+  "author": "Chugunov Roman <Zebs-BMK@yandex.ru>",
+  "license": "GPL-2.0",
+  "devDependencies": {
+    "@types/electron-devtools-installer": "^2.2.0",
+    "@types/react": "^16.9.21",
+    "@types/react-dom": "^16.9.5",
+    "@types/sqlite3": "^3.1.6",
+    "electron": "^8.0.1",
+    "electron-builder": "^22.3.2",
+    "nodemon": "^2.0.2",
+    "npm-run-all": "^4.1.5",
+    "parcel-bundler": "^1.12.4",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "sqlite3": "^4.1.1"
+  }
+}
