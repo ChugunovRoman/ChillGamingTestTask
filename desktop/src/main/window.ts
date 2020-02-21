@@ -32,7 +32,7 @@ export class Window {
 
     const htmlFilePathProd = 'localhost:3001';
     const htmlFilePathDev = url.format({
-      pathname: path.resolve('dist/renderer/index.html'),
+      pathname: path.resolve(__dirname, '../renderer/index.html'),
       protocol: 'file:',
       slashes: true,
     });

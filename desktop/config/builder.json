@@ -1,0 +1,18 @@
+{
+  "appId": "user-crud",
+  "productName": "user-crud",
+  "extraMetadata": {
+    "main": "main/main.js"
+  },
+  "files": ["**/*", "!**/*.map"],
+
+  "directories": {
+    "app": "dist/",
+    "buildResources": "build/installers",
+    "output": "build/installers"
+  },
+
+  "win": {
+    "icon": "resources/icon.ico"
+  }
+}
