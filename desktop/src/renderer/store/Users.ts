@@ -4,9 +4,16 @@ import { observable, action, toJS, autorun } from 'mobx';
 export class Users implements Store.Users {
   @observable users: Model.User[];
   @observable selectedUser: Model.User | null;
+  @observable newUser: Model.FrontUser;
 
   constructor() {
     this.users = [];
+    this.newUser = {
+      firstName: '',
+      lastName: '',
+      dob: Date.now(),
+      address: '',
+    };
 
     this.events();
   }

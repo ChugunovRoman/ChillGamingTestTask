@@ -2,6 +2,7 @@ declare namespace Store {
   interface Users {
     users: Model.User[];
     selectedUser: Model.User | null;
+    newUser: Model.FrontUser;
 
     userUpdate(data: Model.User): void;
     selectedUserDelete(): void;

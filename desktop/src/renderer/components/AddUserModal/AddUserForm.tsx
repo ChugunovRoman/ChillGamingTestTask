@@ -22,14 +22,7 @@ class AddUserForm extends React.Component<AddUserFormProps, Model.FrontUser> {
     super(props);
 
     this.props = props;
-    this.state = this.props.users!.selectedUser
-      ? this.props.users!.selectedUser
-      : {
-          firstName: '',
-          lastName: '',
-          dob: Date.now(),
-          address: '',
-        };
+    this.state = this.props.users!.selectedUser ? this.props.users!.selectedUser : this.props.users!.newUser;
   }
 
   private handleFirstName = (event: React.ChangeEvent<HTMLInputElement> & Event) => {
