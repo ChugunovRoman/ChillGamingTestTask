@@ -1,4 +1,4 @@
-import { BrowserWindow, app, BrowserWindowConstructorOptions, Event } from 'electron';
+import { BrowserWindow, app, BrowserWindowConstructorOptions, Event, Menu } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
@@ -31,8 +31,6 @@ export class Window {
     }
 
     this._window = new BrowserWindow(this.windowOptions);
-    this._window.setMenuBarVisibility(false);
-    this._window.setMenu(null);
 
     const htmlFilePathDev = `http://localhost:3001`;
     const htmlFilePathProd = url.format({
@@ -42,9 +40,12 @@ export class Window {
     });
 
     this._window.loadURL(isDev ? htmlFilePathDev : htmlFilePathProd);
+    // isDev && this._window.webContents.openDevTools();
     this._window.webContents.openDevTools();
 
     this._window.on('closed', () => (this._window = null));
+
+    Menu.setApplicationMenu(null);
 
     await registerIpc();
   };
