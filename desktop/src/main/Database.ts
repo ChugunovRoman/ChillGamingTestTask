@@ -10,7 +10,7 @@ export class Database {
       return Database._connection;
     }
 
-    const filePath = path.resolve(__dirname, 'users.db');
+    const filePath = path.resolve(process.cwd(), 'users.db');
     const createTableQuery = `CREATE TABLE IF NOT EXISTS users (
       uuid VARCHAR(255) PRIMARY KEY NOT NULL UNIQUE,
       first_name VARCHAR(255) NULL,
