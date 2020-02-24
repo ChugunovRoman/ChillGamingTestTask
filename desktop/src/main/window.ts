@@ -40,8 +40,7 @@ export class Window {
     });
 
     this._window.loadURL(isDev ? htmlFilePathDev : htmlFilePathProd);
-    // isDev && this._window.webContents.openDevTools();
-    this._window.webContents.openDevTools();
+    isDev && this._window.webContents.openDevTools();
 
     this._window.on('closed', () => (this._window = null));
 
