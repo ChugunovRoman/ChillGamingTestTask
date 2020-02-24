@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "sourceMap": false,
+    "strictNullChecks": true,
+    "module": "commonjs",
+    "target": "es2017",
+    "allowJs": false,
+    "jsx": "react",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "paths": {
+      "Elements": ["src/renderer/Elements"],
+      "Utils": ["src/utils"]
+    }
+  },
+  "include": ["."],
+  "exclude": ["node_modules", "./dist"]
+}

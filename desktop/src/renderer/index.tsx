@@ -1,6 +1,13 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { Provider } from 'mobx-react';
 
+import store from './store';
 import App from './components';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <Provider {...store}>
+    <App />
+  </Provider>,
+  document.getElementById('root'),
+);

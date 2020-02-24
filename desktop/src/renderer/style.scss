@@ -1,0 +1,58 @@
+@import '../../node_modules/css-vars/css-vars';
+
+$css-vars-use-native: true;
+
+$color-white: rgba(255, 255, 255, 1);
+$color-theme-primary: #9fa8da;
+$color-theme-light: #d1d9ff;
+$color-theme-dark: #6f79a8;
+
+$color-red: #e57373;
+$color-green: #81c784;
+
+$color-text-note: #535353;
+
+$trans-light: rgba(0, 0, 0, 0.1);
+$trans-primary: rgba(0, 0, 0, 0.4);
+
+$modal-width-xs: 40%;
+$modal-width-s: 50%;
+$modal-width-m: 60%;
+$modal-width-l: 70%;
+$modal-width-xl: 80%;
+$modal-width-xxl: 90%;
+
+$button-paddings: 8px;
+
+$header-paddings-xs: 6px;
+$header-paddings-s: 8px;
+$header-paddings-m: 10px;
+$header-paddings-l: 12px;
+$header-paddings-xl: 14px;
+$header-paddings-xxl: 16px;
+
+@include css-vars(
+  (
+    --color-white: $color-white,
+    --color-theme-primary: $color-theme-primary,
+    --color-theme-light: $color-theme-light,
+    --color-theme-dark: $color-theme-dark,
+    --color-text-note: $color-text-note,
+    --color-red: $color-red,
+    --color-green: $color-green,
+    --trans-light: $trans-light,
+    --trans-primary: $trans-primary,
+    --modal-width-xs: $modal-width-xs,
+    --modal-width-s: $modal-width-s,
+    --modal-width-m: $modal-width-m,
+    --modal-width-l: $modal-width-l,
+    --modal-width-xl: $modal-width-xl,
+    --modal-width-xxl: $modal-width-xxl,
+    --button-paddings: $button-paddings,
+    --header-paddings-xs: $header-paddings-xs,
+    --header-paddings-s: $header-paddings-s,
+    --header-paddings-m: $header-paddings-m,
+    --header-paddings-l: $header-paddings-l,
+    --header-paddings-xl: $header-paddings-xl,
+  )
+);
