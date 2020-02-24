@@ -2,9 +2,11 @@ import { observable, action } from 'mobx';
 
 export class Modal implements Store.Modal {
   @observable isUserAddModalOpen: boolean;
+  @observable isConfirmDeleteUserModalOpen: boolean;
 
   constructor() {
     this.isUserAddModalOpen = false;
+    this.isConfirmDeleteUserModalOpen = false;
   }
 
   @action
@@ -14,6 +16,15 @@ export class Modal implements Store.Modal {
   @action
   public closeUserModal = (): void => {
     this.isUserAddModalOpen = false;
+  };
+
+  @action
+  public openDeleteUserModal = (): void => {
+    this.isConfirmDeleteUserModalOpen = true;
+  };
+  @action
+  public closeDeleteUserModal = (): void => {
+    this.isConfirmDeleteUserModalOpen = false;
   };
 }
 

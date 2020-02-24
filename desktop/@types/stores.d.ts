@@ -11,8 +11,11 @@ declare namespace Store {
 
   interface Modal {
     isUserAddModalOpen: boolean;
+    isConfirmDeleteUserModalOpen: boolean;
 
     openUserModal(): void;
     closeUserModal(): void;
+    openDeleteUserModal(): void;
+    closeDeleteUserModal(): void;
   }
 }
