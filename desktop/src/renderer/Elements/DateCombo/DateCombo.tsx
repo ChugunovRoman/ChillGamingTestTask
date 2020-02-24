@@ -4,10 +4,11 @@ import { ComboBox } from '..';
 import './dateCombo.scss';
 
 interface DateComboProps {
+  value?: number;
   label?: string;
   startDate?: number;
 
-  onChange(date: Date): void;
+  onChange(date: number): void;
 }
 interface DateComboState {
   currentDate: Date;
@@ -22,7 +23,7 @@ export class DateCombo extends React.Component<DateComboProps, DateComboState> {
 
     this.props = props;
     this.state = {
-      currentDate: new Date(),
+      currentDate: props.value ? new Date(props.value) : new Date(),
     };
   }
 
@@ -67,7 +68,7 @@ export class DateCombo extends React.Component<DateComboProps, DateComboState> {
       currentDate: date,
     });
 
-    this.props.onChange(this.state.currentDate);
+    this.props.onChange(this.state.currentDate.getTime());
   };
   private handleMonth = (event: React.ChangeEvent<HTMLSelectElement> & Event) => {
     const date = this.state.currentDate;
@@ -85,7 +86,7 @@ export class DateCombo extends React.Component<DateComboProps, DateComboState> {
       currentDate: date,
     });
 
-    this.props.onChange(this.state.currentDate);
+    this.props.onChange(this.state.currentDate.getTime());
   };
   private handleYear = (event: React.ChangeEvent<HTMLSelectElement> & Event) => {
     const date = this.state.currentDate;
@@ -95,10 +96,12 @@ export class DateCombo extends React.Component<DateComboProps, DateComboState> {
       currentDate: date,
     });
 
-    this.props.onChange(this.state.currentDate);
+    this.props.onChange(this.state.currentDate.getTime());
   };
 
   render() {
+    let yearIndex = this.getYears().findIndex(y => +y === this.state.currentDate.getFullYear());
+
     return (
       <div className="datecombo">
         {this.props.label ? <span className="datecombo__label text_note">{this.props.label}</span> : null}
@@ -106,7 +109,7 @@ export class DateCombo extends React.Component<DateComboProps, DateComboState> {
           onChange={this.handleDay}
           className="padding_right_l"
           width="50px"
-          selected={new Date().getDate() - 1}
+          selected={new Date(this.state.currentDate).getDate() - 1}
           options={this.getMonthDays(this.state.currentDate.getMonth() + 1, 2020)}
         />
         <ComboBox
@@ -116,7 +119,7 @@ export class DateCombo extends React.Component<DateComboProps, DateComboState> {
           width="150px"
           options={this.getMonths()}
         />
-        <ComboBox onChange={this.handleYear} width="70px" options={this.getYears()} />
+        <ComboBox onChange={this.handleYear} width="70px" selected={yearIndex} options={this.getYears()} />
       </div>
     );
   }

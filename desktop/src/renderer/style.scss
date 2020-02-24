@@ -11,6 +11,8 @@ $color-red: #e57373;
 $color-green: #81c784;
 
 $color-text-note: #535353;
+$color-text-primary: #2d2d2d;
+$color-text-invert: #e7e7e7;
 
 $trans-light: rgba(0, 0, 0, 0.1);
 $trans-primary: rgba(0, 0, 0, 0.4);
@@ -38,6 +40,8 @@ $header-paddings-xxl: 16px;
     --color-theme-light: $color-theme-light,
     --color-theme-dark: $color-theme-dark,
     --color-text-note: $color-text-note,
+    --color-text-primary: $color-text-primary,
+    --color-text-invert: $color-text-invert,
     --color-red: $color-red,
     --color-green: $color-green,
     --trans-light: $trans-light,

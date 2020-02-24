@@ -1,65 +1,92 @@
-import * as Electron from 'electron';
+import { BrowserWindow, app, BrowserWindowConstructorOptions, Event } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
-export class Window {
-  private window: Electron.BrowserWindow | null;
-  private windowOptions: Electron.BrowserWindowConstructorOptions;
+import { isDev } from '../utils';
+import { registerIpc } from './icp';
 
-  constructor(options: Electron.BrowserViewConstructorOptions) {
-    this.window = null;
+export class Window {
+  private static _instance: Window;
+  private _window: BrowserWindow | null;
+  private windowOptions: BrowserWindowConstructorOptions;
+
+  private constructor(options: BrowserWindowConstructorOptions) {
+    this._window = null;
     this.windowOptions = options;
 
-    Electron.app
+    app
       .on('ready', this.createWindow)
       .on('window-all-closed', this.windowAllClosedHandler)
-      .on('second-instance', this.secondInstancehandler)
+      .on('second-instance', this.secondInstanceHandler)
       .on('activate', this.activeHandler);
   }
 
-  public createWindow() {
-    const isSingleInstance = Electron.app.requestSingleInstanceLock();
+  public createWindow = async () => {
+    const isSingleInstance = app.requestSingleInstanceLock();
 
     if (!isSingleInstance) {
-      Electron.app.quit();
+      app.quit();
 
       return;
     }
 
-    this.window = new Electron.BrowserWindow(this.windowOptions);
-    this.window.setMenuBarVisibility(false);
-    this.window.setMenu(null);
+    this._window = new BrowserWindow(this.windowOptions);
+    this._window.setMenuBarVisibility(false);
+    this._window.setMenu(null);
 
-    const htmlFilePathProd = 'localhost:3001';
-    const htmlFilePathDev = url.format({
+    const htmlFilePathDev = `http://localhost:3001`;
+    const htmlFilePathProd = url.format({
       pathname: path.resolve(__dirname, '../renderer/index.html'),
-      protocol: 'file:',
+      protocol: 'file',
       slashes: true,
     });
 
-    this.window.loadURL(process.env.NODE_ENV !== 'production' ? htmlFilePathDev : htmlFilePathProd);
-    this.window.webContents.openDevTools();
+    this._window.loadURL(isDev ? htmlFilePathDev : htmlFilePathProd);
+    this._window.webContents.openDevTools();
 
-    this.window.on('closed', () => (window = null));
-  }
+    this._window.on('closed', () => (this._window = null));
 
-  private windowAllClosedHandler() {
-    if (process.platform !== 'darwin') {
-      Electron.app.quit();
+    await registerIpc();
+  };
+
+  public static getInstance(options?: BrowserWindowConstructorOptions): Window {
+    if (Window._instance) {
+      return Window._instance;
     }
+
+    const defaultOptions: BrowserWindowConstructorOptions = {
+      width: 600,
+      height: 700,
+      webPreferences: {
+        nodeIntegration: true,
+      },
+    };
+
+    Window._instance = new Window(options ? options : defaultOptions);
+
+    return Window._instance;
   }
-  private activeHandler() {
+  public get window(): BrowserWindow | null {
+    return this._window;
+  }
+
+  private windowAllClosedHandler = () => {
+    if (process.platform !== 'darwin') {
+      app.quit();
+    }
+  };
+  private activeHandler = () => {
     if (window === null) {
       this.createWindow();
     }
-  }
-  private secondInstancehandler(event: Electron.Event, argv: string[], workingDirectory: string) {
-    if (this.window === null) {
+  };
+  private secondInstanceHandler = (event: Event, argv: string[], workingDirectory: string) => {
+    if (this._window === null) {
       this.createWindow();
 
       return;
     }
 
-    this.window.focus();
-  }
+    this._window.focus();
+  };
 }

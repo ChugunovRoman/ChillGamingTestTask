@@ -1,34 +1,35 @@
 import * as React from 'react';
-import { Button, IconX, Input, DateCombo } from 'Elements';
+import { observer, inject } from 'mobx-react';
+import { Button, IconX, Input, DateCombo } from '../../Elements';
 
 interface AddUserFormProps {
   title: string;
+  users?: Store.Users;
   isOpen?: boolean;
 
-  addUser(event: React.MouseEvent<HTMLDivElement> & Event): void;
+  addUser(user: Model.FrontUser): void;
+  editUser(user: Model.User): void;
   closeModal(event: React.MouseEvent<HTMLDivElement> & Event): void;
 }
-interface AddUserFormState {
-  firstName: string;
-  lastName: string;
-  dob: Date;
-  address: string;
-}
 
-class AddUserForm extends React.Component<AddUserFormProps, AddUserFormState> {
+@inject('users')
+@observer
+class AddUserForm extends React.Component<AddUserFormProps, Model.FrontUser> {
   props: AddUserFormProps;
-  state: AddUserFormState;
+  state: Model.FrontUser;
 
   constructor(props: AddUserFormProps) {
     super(props);
 
     this.props = props;
-    this.state = {
-      firstName: '',
-      lastName: '',
-      dob: new Date(),
-      address: '',
-    };
+    this.state = this.props.users!.selectedUser
+      ? this.props.users!.selectedUser
+      : {
+          firstName: '',
+          lastName: '',
+          dob: Date.now(),
+          address: '',
+        };
   }
 
   private handleFirstName = (event: React.ChangeEvent<HTMLInputElement> & Event) => {
@@ -37,18 +38,22 @@ class AddUserForm extends React.Component<AddUserFormProps, AddUserFormState> {
   private handleLastName = (event: React.ChangeEvent<HTMLInputElement> & Event) => {
     this.state.lastName = event.target.value;
   };
-  private handleDobName = (date: Date) => {
-    console.log('==========================> date: ', date);
+  private handleDobName = (date: number) => {
     this.state.dob = date;
   };
   private handleAddressName = (event: React.ChangeEvent<HTMLInputElement> & Event) => {
     this.state.address = event.target.value;
   };
 
-  private successClose = (event: React.MouseEvent<HTMLDivElement> & Event) => {
-    console.log(this.state);
+  private addUser = (event: React.MouseEvent<HTMLDivElement> & Event) => {
+    this.props.addUser(this.state);
 
-    // this.props.closeModal(event);
+    this.props.closeModal(event);
+  };
+  private editUser = (event: React.MouseEvent<HTMLDivElement> & Event) => {
+    this.props.editUser(this.props.users!.selectedUser!);
+
+    this.props.closeModal(event);
   };
 
   render() {
@@ -56,19 +61,40 @@ class AddUserForm extends React.Component<AddUserFormProps, AddUserFormState> {
       <div className="modal">
         <div className="modal__window">
           <div className="header">
-            <h4 className="header__text">{this.props.title}</h4>
+            <h4 className="header__text text_invert">{this.props.title}</h4>
             <Button onClick={this.props.closeModal} className="button_header margin_right_m" icon={<IconX />} />
           </div>
 
           <div className="form">
-            <Input onChange={this.handleFirstName} width="auto" label="First name" type="text" />
-            <Input onChange={this.handleLastName} width="auto" label="Last name" type="text" />
-            <DateCombo onChange={this.handleDobName} label="Date of birth" />
-            <Input onChange={this.handleAddressName} width="auto" label="Address" type="text" />
+            <Input
+              onChange={this.handleFirstName}
+              value={this.state.firstName}
+              width="auto"
+              label="First name"
+              type="text"
+            />
+            <Input
+              onChange={this.handleLastName}
+              value={this.state.lastName}
+              width="auto"
+              label="Last name"
+              type="text"
+            />
+            <DateCombo onChange={this.handleDobName} value={this.state.dob} label="Date of birth" />
+            <Input
+              onChange={this.handleAddressName}
+              value={this.state.address}
+              width="auto"
+              label="Address"
+              type="text"
+            />
 
             <div className="form__buttons">
-              <Button className="button_xl button_hover_green" onClick={this.successClose}>
-                Add
+              <Button
+                className="button_xl button_hover_green"
+                onClick={this.props.users!.selectedUser ? this.editUser : this.addUser}
+              >
+                {this.props.users!.selectedUser ? 'Save' : 'Add'}
               </Button>
               <Button className="button_xl button_hover_red" onClick={this.props.closeModal}>
                 Close

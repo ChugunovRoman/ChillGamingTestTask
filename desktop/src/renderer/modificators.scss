@@ -3,6 +3,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: Helvetica, sans-serif, Arial;
+  color: var(--color-text-primary);
 }
 
 .button_flat {
@@ -94,6 +95,9 @@ h6 {
     size: 14px;
   }
   color: var(--color-text-note);
+}
+.text_invert {
+  color: var(--color-text-invert);
 }
 
 .padding_left_xs {

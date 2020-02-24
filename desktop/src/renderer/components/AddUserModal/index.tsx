@@ -1,18 +1,20 @@
 import * as React from 'react';
 import { observer, inject } from 'mobx-react';
 
-import { Button, IconPlus, IconEdit, IconX } from 'Elements';
+import { Button, IconPlus, IconEdit, IconX } from '../../Elements';
 import UserForm from './AddUserForm';
 import Modal from './modal';
 
 import './style.scss';
 
 interface AddUserModalProps {
+  users?: Store.Users;
   modals?: Store.Modal;
-  result(): void;
+  result(user: Model.FrontUser): void;
 }
 
 @inject('modals')
+@inject('users')
 @observer
 class AddUserModal extends React.Component<AddUserModalProps, {}> {
   props: AddUserModalProps;
@@ -23,14 +25,24 @@ class AddUserModal extends React.Component<AddUserModalProps, {}> {
     this.props = props;
   }
 
+  private deleteUser = (event: React.MouseEvent<HTMLDivElement> & Event) => {
+    this.props.users!.selectedUserDelete();
+  };
+  private editUser = (user: Model.User) => {
+    this.props.users!.selectedUserEdit();
+  };
   private openModal = (event: React.MouseEvent<HTMLDivElement> & Event) => {
+    this.props.users!.selectedUser = null;
+    this.props.modals!.isUserAddModalOpen = true;
+  };
+  private openModalForUpdate = (event: React.MouseEvent<HTMLDivElement> & Event) => {
     this.props.modals!.isUserAddModalOpen = true;
   };
   private closeModal = (event: React.MouseEvent<HTMLDivElement> & Event) => {
     this.props.modals!.isUserAddModalOpen = false;
   };
-  private successClose = (event: React.MouseEvent<HTMLDivElement> & Event) => {
-    console.log();
+  private successClose = (user: Model.FrontUser) => {
+    this.props.result(user);
     this.props.modals!.isUserAddModalOpen = false;
   };
 
@@ -38,13 +50,22 @@ class AddUserModal extends React.Component<AddUserModalProps, {}> {
     return (
       <React.Fragment>
         <Button className="button_ghost margin_right_xl" icon={<IconPlus />} onClick={this.openModal} />
-        <Button onClick={() => {}} className="button button_ghost button_disabled" icon={<IconEdit />} />
-        <Button onClick={() => {}} className="button button_ghost button_disabled margin_right_xl" icon={<IconX />} />
+        <Button
+          onClick={this.openModalForUpdate}
+          className={`button button_ghost${this.props.users!.selectedUser ? '' : ' button_disabled'}`}
+          icon={<IconEdit />}
+        />
+        <Button
+          onClick={this.deleteUser}
+          className={`button button_ghost margin_right_xl${this.props.users!.selectedUser ? '' : ' button_disabled'}`}
+          icon={<IconX />}
+        />
         {this.props.modals?.isUserAddModalOpen ? (
           <Modal>
             <UserForm
               isOpen={this.props.modals!.isUserAddModalOpen}
               closeModal={this.closeModal}
+              editUser={this.editUser}
               addUser={this.successClose}
               title="Add user dialog"
             />

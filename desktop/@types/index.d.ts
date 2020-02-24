@@ -1,9 +1,12 @@
 declare namespace Model {
-  interface User {
-    uuid: string;
+  interface FrontUser {
     firstName: string;
     lastName: string;
     address: string;
-    dob: Date;
+    dob: number;
+  }
+
+  interface User extends FrontUser {
+    uuid: string;
   }
 }

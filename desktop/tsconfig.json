@@ -11,8 +11,8 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "paths": {
-      "Elements": ["src/renderer/Elements"],
-      "Utils": ["src/utils"]
+      "Elements": ["./src/renderer/Elements"],
+      "Utils": ["./src/utils"]
     }
   },
   "include": ["."],

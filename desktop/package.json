@@ -4,16 +4,17 @@
   "description": "",
   "main": "dist/main/main.js",
   "scripts": {
-    "build": "rimraf dist && run-p -s main:build renderer:build",
+    "build": "run-p -s main:build renderer:build",
     "watch": "run-p -s parcel:watch electron:start",
-    "main:watch": "parcel watch src/main/index.ts  --out-dir dist/main/ --out-file main --target electron",
-    "main:build": "parcel build src/main/index.ts  --out-dir dist/main/ --out-file main --target electron",
+    "main:watch": "parcel watch src/main/index.ts  --out-dir dist/main/ --out-file main --target node",
+    "main:build": "parcel build src/main/index.ts  --out-dir dist/main/ --out-file main --target node",
     "parcel:watch": "run-p -r main:watch renderer:watch",
     "renderer:watch": "parcel src/renderer/index.html --port 3001 --out-dir dist/renderer",
-    "renderer:build": "parcel build src/renderer/index.html --public-url ./ --out-dir dist/renderer",
+    "renderer:build": "parcel build src/renderer/index.html --public-url ./ --out-dir dist/renderer --target electron",
     "electron:start": "nodemon --watch dist/main --exec \"electron .\"",
     "electron:build": "build --x64 --publish=never",
-    "builder": "rimraf build && cp ./package.json ./dist && electron-builder --config=config/builder.json"
+    "builder": "rimraf build && cp ./package.json ./dist && electron-builder --config=config/builder.json",
+    "postinstall": "npm i sqlite3 --runtime=electron --target=7.1.2 --dist-url=https://atom.io/download/electron"
   },
   "keywords": [
     "Electron",
@@ -23,12 +24,10 @@
   "author": "Chugunov Roman <Zebs-BMK@yandex.ru>",
   "license": "GPL-2.0",
   "devDependencies": {
-    "@types/electron-devtools-installer": "^2.2.0",
-    "@types/palx": "^1.0.1",
     "@types/react": "^16.9.21",
     "@types/react-dom": "^16.9.5",
     "@types/sqlite3": "^3.1.6",
-    "electron": "^8.0.1",
+    "electron": "=7.1.2",
     "electron-builder": "^22.3.2",
     "nodemon": "^2.0.2",
     "npm-run-all": "^4.1.5",
@@ -38,19 +37,13 @@
     "typescript": "^3.7.5"
   },
   "dependencies": {
-    "@emotion/core": "^10.0.27",
-    "@emotion/css": "^10.0.27",
-    "Utils": "^1.0.39",
     "css-vars": "^2.2.0",
-    "electron-settings": "^3.2.0",
     "mobx": "^5.15.4",
     "mobx-react": "^6.1.8",
-    "palx": "^1.0.3",
-    "plax": "^1.2.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "sancho": "^3.5.6",
-    "sqlite3": "^4.1.1"
+    "sqlite3": "^4.1.1",
+    "uuidv4": "^6.0.2"
   },
   "alias": {
     "Elements": "./src/renderer/Elements",

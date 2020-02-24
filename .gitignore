@@ -2,6 +2,7 @@
 **/coverage
 **/dist
 **/.cache
+**/*.db
 **/yarn-error.log
 **/package-lock.json
 **/yarn.lock
