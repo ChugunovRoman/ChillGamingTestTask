@@ -2,6 +2,8 @@
 
 ### **Задача 1**
 
+[Ссылка на руководство по использованию](https://github.com/ChugunovRoman/ChillGamingTestTask/blob/master/desktop/README.md)
+
 Требуется создать десктоп-приложение на **Electron** под платформу **Windows** с использованием **Vue/React** на выбор.
 
 Реализовать **CRUD** с использованием **SQLite**:
@@ -27,6 +29,8 @@
 
 
 ### **Задача 2**
+
+[Ссылка на руководство по использованию](https://github.com/ChugunovRoman/ChillGamingTestTask/blob/master/api/README.md)
 
 Требуется создать базовое **REST API**.
 
